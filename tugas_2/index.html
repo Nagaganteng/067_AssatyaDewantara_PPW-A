@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PPW News Analysis</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ========================================
+         HEADER
+    ======================================== -->
+
+    <header class="header">
+
+        <div class="container">
+
+            <div class="logo">
+                PPW NEWS ANALYSIS
+            </div>
+
+            <nav>
+
+                <a href="#beranda">
+                    Beranda
+                </a>
+
+                <a href="#sport">
+                    Sport
+                </a>
+
+                <a href="#finance">
+                    Finance
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- ========================================
+         HERO
+    ======================================== -->
+
+    <section id="beranda" class="hero">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <p class="label">
+                    PENCARIAN & PENAMBANGAN WEB
+                </p>
+
+                <h1>
+                    Analisis Berita
+                    <span>Detik.com</span>
+                </h1>
+
+                <p class="description">
+
+                    Implementasi web crawling, preprocessing teks,
+                    TF-IDF, dan Principal Component Analysis
+                    pada berita Detik Sport dan Detik Finance.
+
+                </p>
+
+
+                <div class="source-box">
+
+                    <div class="source">
+
+                        <strong>01</strong>
+
+                        <span>
+                            Detik Sport<br>
+                            100 Artikel
+                        </span>
+
+                    </div>
+
+
+                    <div class="source">
+
+                        <strong>02</strong>
+
+                        <span>
+                            Detik Finance<br>
+                            100 Artikel
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         DATASET
+    ======================================== -->
+
+    <section class="dataset">
+
+        <div class="container">
+
+            <h2>
+                Dataset
+            </h2>
+
+
+            <div class="dataset-category">
+
+                <div class="dataset-title">
+
+                    <span>
+                        DATASET 01
+                    </span>
+
+                    <h3>
+                        Detik Sport
+                    </h3>
+
+                </div>
+
+
+                <div class="dataset-grid">
+
+                    <div class="card">
+
+                        <h3 id="sportDatasetArtikel">
+                            -
+                        </h3>
+
+                        <p>
+                            Artikel Berita
+                        </p>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h3 id="sportDatasetKategori">
+                            -
+                        </h3>
+
+                        <p>
+                            Kategori
+                        </p>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h3>
+                            TF-IDF
+                        </h3>
+
+                        <p>
+                            Ekstraksi Fitur
+                        </p>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h3>
+                            PCA
+                        </h3>
+
+                        <p>
+                            Reduksi Dimensi
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="dataset-category finance-dataset">
+
+                <div class="dataset-title">
+
+                    <span>
+                        DATASET 02
+                    </span>
+
+                    <h3>
+                        Detik Finance
+                    </h3>
+
+                </div>
+
+
+                <div class="dataset-grid">
+
+                    <div class="card">
+
+                        <h3 id="financeDatasetArtikel">
+                            -
+                        </h3>
+
+                        <p>
+                            Artikel Berita
+                        </p>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h3 id="financeDatasetKategori">
+                            -
+                        </h3>
+
+                        <p>
+                            Kategori
+                        </p>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h3>
+                            TF-IDF
+                        </h3>
+
+                        <p>
+                            Ekstraksi Fitur
+                        </p>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h3>
+                            PCA
+                        </h3>
+
+                        <p>
+                            Reduksi Dimensi
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         SPORT
+    ======================================== -->
+
+    <section id="sport" class="category-header">
+
+        <div class="container">
+
+            <p class="section-label">
+                DATASET 01
+            </p>
+
+            <h2>
+                Detik Sport
+            </h2>
+
+            <p>
+                Analisis 100 artikel berita sepak bola
+                dari kategori Liga Inggris dan Liga Italia.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         SPORT - PREPROCESSING
+    ======================================== -->
+
+    <section id="sport-preprocessing" class="section">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <p class="section-label">
+                    SPORT · TAHAP 01
+                </p>
+
+                <h2>
+                    Preprocessing
+                </h2>
+
+                <p>
+                    Tahap preprocessing digunakan untuk membersihkan
+                    teks berita sebelum dilakukan ekstraksi fitur.
+                </p>
+
+            </div>
+
+
+            <div class="process-grid">
+
+                <div class="process-card">
+
+                    <span>
+                        01
+                    </span>
+
+                    <h3>
+                        Case Folding
+                    </h3>
+
+                    <p>
+                        Mengubah seluruh huruf menjadi huruf kecil.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <span>
+                        02
+                    </span>
+
+                    <h3>
+                        Cleaning
+                    </h3>
+
+                    <p>
+                        Menghapus angka, URL, dan karakter
+                        yang tidak diperlukan.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <span>
+                        03
+                    </span>
+
+                    <h3>
+                        Stopword Removal
+                    </h3>
+
+                    <p>
+                        Menghapus kata umum yang tidak memiliki
+                        informasi penting.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <span>
+                        04
+                    </span>
+
+                    <h3>
+                        Stemming
+                    </h3>
+
+                    <p>
+                        Mengubah kata menjadi bentuk kata dasarnya.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table id="sportPreprocessingTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                No
+                            </th>
+
+                            <th>
+                                Judul Berita
+                            </th>
+
+                            <th>
+                                Teks Asli
+                            </th>
+
+                            <th>
+                                Hasil Preprocessing
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="sportPreprocessingBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         SPORT - TF-IDF
+    ======================================== -->
+
+    <section id="sport-tfidf" class="section section-dark">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <p class="section-label">
+                    SPORT · TAHAP 02
+                </p>
+
+                <h2>
+                    TF-IDF
+                </h2>
+
+                <p>
+                    TF-IDF digunakan untuk merepresentasikan
+                    setiap berita berdasarkan tingkat kepentingan
+                    kata pada dokumen.
+                </p>
+
+            </div>
+
+
+            <div class="tfidf-info">
+
+                <div class="info-box">
+
+                    <h3>
+                        Term Frequency
+                    </h3>
+
+                    <p>
+                        Mengukur frekuensi kemunculan sebuah kata
+                        dalam suatu dokumen.
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <h3>
+                        Inverse Document Frequency
+                    </h3>
+
+                    <p>
+                        Mengukur tingkat kepentingan kata
+                        berdasarkan kemunculannya pada seluruh dokumen.
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <h3>
+                        TF-IDF
+                    </h3>
+
+                    <p>
+                        Menghasilkan bobot numerik untuk setiap
+                        kata pada setiap dokumen.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="tfidf-result">
+
+                <div>
+
+                    <p class="small-label">
+                        JUMLAH ARTIKEL
+                    </p>
+
+                    <h3 id="sportJumlahArtikel">
+                        -
+                    </h3>
+
+                </div>
+
+
+                <div>
+
+                    <p class="small-label">
+                        JUMLAH KATA UNIK
+                    </p>
+
+                    <h3 id="sportJumlahKata">
+                        -
+                    </h3>
+
+                </div>
+
+
+                <div>
+
+                    <p class="small-label">
+                        DIMENSI TF-IDF
+                    </p>
+
+                    <h3 id="sportDimensiTfidf">
+                        -
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-description">
+
+                <p>
+                    Berikut merupakan kata-kata dengan nilai
+                    TF-IDF tertinggi pada dataset Detik Sport.
+                </p>
+
+            </div>
+
+
+            <div class="table-wrapper dark-table">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                No
+                            </th>
+
+                            <th>
+                                Kata
+                            </th>
+
+                            <th>
+                                Nilai TF-IDF
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="sportTfidfBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         SPORT - PCA
+    ======================================== -->
+
+    <section id="sport-pca" class="section">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <p class="section-label">
+                    SPORT · TAHAP 03
+                </p>
+
+                <h2>
+                    Principal Component Analysis
+                </h2>
+
+                <p>
+                    PCA digunakan untuk mengurangi dimensi data
+                    TF-IDF menjadi dua komponen utama sehingga
+                    dapat divisualisasikan dalam bentuk grafik.
+                </p>
+
+            </div>
+
+
+            <div class="pca-result">
+
+                <div class="pca-info">
+
+                    <span>
+                        DIMENSI AWAL
+                    </span>
+
+                    <strong id="sportDimensiAwal">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="pca-arrow">
+                    →
+                </div>
+
+
+                <div class="pca-info">
+
+                    <span>
+                        DIMENSI SETELAH PCA
+                    </span>
+
+                    <strong>
+                        2
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="chart-container">
+
+                <div class="chart-header">
+
+                    <div>
+
+                        <p class="small-label">
+                            SPORT · VISUALISASI
+                        </p>
+
+                        <h3>
+                            Sebaran Berita Detik Sport
+                        </h3>
+
+                    </div>
+
+
+                    <div class="legend">
+
+                        <span>
+                            <i class="dot inggris"></i>
+                            Liga Inggris
+                        </span>
+
+                        <span>
+                            <i class="dot italia"></i>
+                            Liga Italia
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart">
+
+                    <div class="axis-y">
+                        PC2
+                    </div>
+
+
+                    <div
+                        class="chart-area"
+                        id="sportChartArea">
+
+                        <p id="sportChartLoading">
+                            Memuat data PCA Sport...
+                        </p>
+
+                    </div>
+
+
+                    <div class="axis-x">
+                        PC1
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="pca-note">
+
+                <p>
+                    Setiap titik pada grafik mewakili satu artikel
+                    berita Sport. Posisi titik ditentukan berdasarkan
+                    nilai PC1 dan PC2 hasil reduksi dimensi menggunakan PCA.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         FINANCE HEADER
+    ======================================== -->
+
+    <section id="finance" class="category-header finance-header">
+
+        <div class="container">
+
+            <p class="section-label">
+                DATASET 02
+            </p>
+
+            <h2>
+                Detik Finance
+            </h2>
+
+            <p>
+                Analisis 100 artikel berita dari kategori
+                Detik Finance menggunakan tahapan preprocessing,
+                TF-IDF, dan PCA.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         FINANCE - PREPROCESSING
+    ======================================== -->
+
+    <section id="finance-preprocessing" class="section">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <p class="section-label">
+                    FINANCE · TAHAP 01
+                </p>
+
+                <h2>
+                    Preprocessing
+                </h2>
+
+                <p>
+                    Tahap preprocessing digunakan untuk membersihkan
+                    teks berita Finance sebelum dilakukan ekstraksi fitur.
+                </p>
+
+            </div>
+
+
+            <div class="process-grid">
+
+                <div class="process-card">
+
+                    <span>
+                        01
+                    </span>
+
+                    <h3>
+                        Case Folding
+                    </h3>
+
+                    <p>
+                        Mengubah seluruh huruf menjadi huruf kecil.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <span>
+                        02
+                    </span>
+
+                    <h3>
+                        Cleaning
+                    </h3>
+
+                    <p>
+                        Menghapus angka, URL, dan karakter
+                        yang tidak diperlukan.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <span>
+                        03
+                    </span>
+
+                    <h3>
+                        Stopword Removal
+                    </h3>
+
+                    <p>
+                        Menghapus kata umum yang tidak memiliki
+                        informasi penting.
+                    </p>
+
+                </div>
+
+
+                <div class="process-card">
+
+                    <span>
+                        04
+                    </span>
+
+                    <h3>
+                        Stemming
+                    </h3>
+
+                    <p>
+                        Mengubah kata menjadi bentuk kata dasarnya.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                No
+                            </th>
+
+                            <th>
+                                Judul Berita
+                            </th>
+
+                            <th>
+                                Teks Asli
+                            </th>
+
+                            <th>
+                                Hasil Preprocessing
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="financePreprocessingBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         FINANCE - TF-IDF
+    ======================================== -->
+
+    <section id="finance-tfidf" class="section section-dark">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <p class="section-label">
+                    FINANCE · TAHAP 02
+                </p>
+
+                <h2>
+                    TF-IDF
+                </h2>
+
+                <p>
+                    TF-IDF digunakan untuk merepresentasikan
+                    setiap berita Finance berdasarkan tingkat
+                    kepentingan kata pada dokumen.
+                </p>
+
+            </div>
+
+
+            <div class="tfidf-info">
+
+                <div class="info-box">
+
+                    <h3>
+                        Term Frequency
+                    </h3>
+
+                    <p>
+                        Mengukur frekuensi kemunculan sebuah kata
+                        dalam suatu dokumen.
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <h3>
+                        Inverse Document Frequency
+                    </h3>
+
+                    <p>
+                        Mengukur tingkat kepentingan kata
+                        berdasarkan kemunculannya pada seluruh dokumen.
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <h3>
+                        TF-IDF
+                    </h3>
+
+                    <p>
+                        Menghasilkan bobot numerik untuk setiap
+                        kata pada setiap dokumen.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="tfidf-result">
+
+                <div>
+
+                    <p class="small-label">
+                        JUMLAH ARTIKEL
+                    </p>
+
+                    <h3 id="financeJumlahArtikel">
+                        -
+                    </h3>
+
+                </div>
+
+
+                <div>
+
+                    <p class="small-label">
+                        JUMLAH KATA UNIK
+                    </p>
+
+                    <h3 id="financeJumlahKata">
+                        -
+                    </h3>
+
+                </div>
+
+
+                <div>
+
+                    <p class="small-label">
+                        DIMENSI TF-IDF
+                    </p>
+
+                    <h3 id="financeDimensiTfidf">
+                        -
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-description">
+
+                <p>
+                    Berikut merupakan kata-kata dengan nilai
+                    TF-IDF tertinggi pada dataset Detik Finance.
+                </p>
+
+            </div>
+
+
+            <div class="table-wrapper dark-table">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                No
+                            </th>
+
+                            <th>
+                                Kata
+                            </th>
+
+                            <th>
+                                Nilai TF-IDF
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="financeTfidfBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         FINANCE - PCA
+    ======================================== -->
+
+    <section id="finance-pca" class="section">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <p class="section-label">
+                    FINANCE · TAHAP 03
+                </p>
+
+                <h2>
+                    Principal Component Analysis
+                </h2>
+
+                <p>
+                    PCA digunakan untuk mengurangi dimensi data
+                    TF-IDF Finance menjadi dua komponen utama
+                    sehingga dapat divisualisasikan dalam bentuk grafik.
+                </p>
+
+            </div>
+
+
+            <div class="pca-result">
+
+                <div class="pca-info">
+
+                    <span>
+                        DIMENSI AWAL
+                    </span>
+
+                    <strong id="financeDimensiAwal">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="pca-arrow">
+                    →
+                </div>
+
+
+                <div class="pca-info">
+
+                    <span>
+                        DIMENSI SETELAH PCA
+                    </span>
+
+                    <strong>
+                        2
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="chart-container">
+
+                <div class="chart-header">
+
+                    <div>
+
+                        <p class="small-label">
+                            FINANCE · VISUALISASI
+                        </p>
+
+                        <h3>
+                            Sebaran Berita Detik Finance
+                        </h3>
+
+                    </div>
+
+
+                    <div
+                        class="legend"
+                        id="financeLegend">
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart">
+
+                    <div class="axis-y">
+                        PC2
+                    </div>
+
+
+                    <div
+                        class="chart-area"
+                        id="financeChartArea">
+
+                        <p id="financeChartLoading">
+                            Memuat data PCA Finance...
+                        </p>
+
+                    </div>
+
+
+                    <div class="axis-x">
+                        PC1
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="pca-note">
+
+                <p>
+                    Setiap titik pada grafik mewakili satu artikel
+                    berita Finance. Posisi titik ditentukan berdasarkan
+                    nilai PC1 dan PC2 hasil reduksi dimensi menggunakan PCA.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <h3>
+                PPW News Analysis
+            </h3>
+
+            <p>
+                Analisis berita Detik Sport dan Detik Finance
+                menggunakan Web Crawling, Preprocessing,
+                TF-IDF, dan PCA.
+            </p>
+
+            <p class="copyright">
+                © 2026 Assatya Dewantara
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
