@@ -1,6 +1,6 @@
 // =====================================================
 // PPW NEWS ANALYSIS
-// SCRIPT DATA SPORT & FINANCE
+// DATA FINANCE + SPORT
 // =====================================================
 
 
@@ -24,7 +24,7 @@ function escapeHTML(text) {
 
 
 // =====================================================
-// MENCARI NILAI DARI BEBERAPA KEMUNGKINAN NAMA KOLOM
+// MENCARI NILAI KOLOM
 // =====================================================
 
 function getValue(row, names) {
@@ -47,12 +47,13 @@ function getValue(row, names) {
 
 
 // =====================================================
-// MENAMPILKAN PESAN ERROR DI TABEL
+// MENAMPILKAN ERROR TABEL
 // =====================================================
 
 function showTableError(bodyId, message) {
 
-    var tbody = document.getElementById(bodyId);
+    var tbody =
+        document.getElementById(bodyId);
 
     if (!tbody) {
         return;
@@ -60,9 +61,14 @@ function showTableError(bodyId, message) {
 
     tbody.innerHTML =
         "<tr>" +
-        "<td colspan='4' style='text-align:center; padding:30px; color:#dc2626;'>" +
+
+        "<td colspan='5' " +
+        "style='text-align:center; padding:30px; color:#dc2626;'>" +
+
         escapeHTML(message) +
+
         "</td>" +
+
         "</tr>";
 }
 
@@ -71,9 +77,16 @@ function showTableError(bodyId, message) {
 // LOAD PREPROCESSING
 // =====================================================
 
-function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
+function loadPreprocessing(
+    file,
+    bodyId
+) {
 
-    console.log("Memuat preprocessing:", file);
+    console.log(
+        "Memuat preprocessing:",
+        file
+    );
+
 
     fetch(file)
 
@@ -82,7 +95,8 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
             if (!response.ok) {
 
                 throw new Error(
-                    "File tidak ditemukan: " + file
+                    "File tidak ditemukan: " +
+                    file
                 );
 
             }
@@ -91,13 +105,18 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
 
         })
 
+
         .then(function(data) {
 
             console.log(
                 "Data preprocessing berhasil:",
-                file,
                 data
             );
+
+
+            // =============================================
+            // CEK FORMAT DATA
+            // =============================================
 
             if (!Array.isArray(data)) {
 
@@ -107,8 +126,14 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
 
             }
 
+
+            // =============================================
+            // CARI TABEL
+            // =============================================
+
             var tbody =
                 document.getElementById(bodyId);
+
 
             if (!tbody) {
 
@@ -118,6 +143,137 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
                 );
 
             }
+
+
+            // =============================================
+            // JUMLAH ARTIKEL
+            // =============================================
+
+            var jumlahArtikel =
+                data.length;
+
+
+            // =============================================
+            // HITUNG KATEGORI
+            // =============================================
+
+            var kategoriSet =
+                new Set();
+
+
+            data.forEach(function(row) {
+
+                var kategori =
+                    getValue(
+                        row,
+                        [
+                            "kategori",
+                            "Kategori",
+                            "category",
+                            "Category"
+                        ]
+                    );
+
+
+                if (kategori) {
+
+                    kategoriSet.add(
+                        String(kategori).trim()
+                    );
+
+                }
+
+            });
+
+
+            var daftarKategori =
+                Array.from(kategoriSet);
+
+
+            // =============================================
+            // UPDATE DATASET BERITA
+            // =============================================
+
+            var datasetArtikel =
+                document.getElementById(
+                    "datasetArtikel"
+                );
+
+
+            if (datasetArtikel) {
+
+                datasetArtikel.textContent =
+                    jumlahArtikel;
+
+            } else {
+
+                console.warn(
+                    "ID datasetArtikel tidak ditemukan."
+                );
+
+            }
+
+
+            // =============================================
+            // UPDATE KATEGORI DATASET
+            // =============================================
+
+            var datasetKategori =
+                document.getElementById(
+                    "datasetKategori"
+                );
+
+
+            if (datasetKategori) {
+
+                if (daftarKategori.length > 0) {
+
+                    datasetKategori.textContent =
+                        daftarKategori.join(" + ");
+
+                } else {
+
+                    datasetKategori.textContent =
+                        "-";
+
+                }
+
+            } else {
+
+                console.warn(
+                    "ID datasetKategori tidak ditemukan."
+                );
+
+            }
+
+
+            // =============================================
+            // UPDATE TOTAL PREPROCESSING
+            // =============================================
+
+            var preprocessingTotal =
+                document.getElementById(
+                    "preprocessingTotal"
+                );
+
+
+            if (preprocessingTotal) {
+
+                preprocessingTotal.textContent =
+                    jumlahArtikel;
+
+            } else {
+
+                console.warn(
+                    "ID preprocessingTotal tidak ditemukan."
+                );
+
+            }
+
+
+            // =============================================
+            // KOSONGKAN TABEL
+            // =============================================
 
             tbody.innerHTML = "";
 
@@ -129,10 +285,16 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
             if (data.length === 0) {
 
                 tbody.innerHTML =
+
                     "<tr>" +
-                    "<td colspan='4' style='text-align:center; padding:30px;'>" +
+
+                    "<td colspan='5' " +
+                    "style='text-align:center; padding:30px;'>" +
+
                     "Data tidak tersedia." +
+
                     "</td>" +
+
                     "</tr>";
 
                 return;
@@ -146,37 +308,75 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
 
             data.forEach(function(row, index) {
 
-                var judul = getValue(
-                    row,
-                    [
-                        "judul",
-                        "Judul",
-                        "title",
-                        "Title"
-                    ]
-                );
 
-                var isi = getValue(
-                    row,
-                    [
-                        "isi",
-                        "Isi",
-                        "teks",
-                        "text",
-                        "body"
-                    ]
-                );
+                // -----------------------------------------
+                // KATEGORI
+                // -----------------------------------------
 
-                var preprocessing = getValue(
-                    row,
-                    [
-                        "teks_preprocessing",
-                        "hasil_preprocessing",
-                        "preprocessing",
-                        "text_preprocessing"
-                    ]
-                );
+                var kategori =
+                    getValue(
+                        row,
+                        [
+                            "kategori",
+                            "Kategori",
+                            "category",
+                            "Category"
+                        ]
+                    );
 
+
+                // -----------------------------------------
+                // JUDUL
+                // -----------------------------------------
+
+                var judul =
+                    getValue(
+                        row,
+                        [
+                            "judul",
+                            "Judul",
+                            "title",
+                            "Title"
+                        ]
+                    );
+
+
+                // -----------------------------------------
+                // ISI ARTIKEL
+                // -----------------------------------------
+
+                var isi =
+                    getValue(
+                        row,
+                        [
+                            "isi",
+                            "Isi",
+                            "teks",
+                            "text",
+                            "body"
+                        ]
+                    );
+
+
+                // -----------------------------------------
+                // HASIL PREPROCESSING
+                // -----------------------------------------
+
+                var preprocessing =
+                    getValue(
+                        row,
+                        [
+                            "teks_preprocessing",
+                            "hasil_preprocessing",
+                            "preprocessing",
+                            "text_preprocessing"
+                        ]
+                    );
+
+
+                // -----------------------------------------
+                // BUAT BARIS
+                // -----------------------------------------
 
                 var tr =
                     document.createElement("tr");
@@ -189,15 +389,27 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
                     "</td>" +
 
                     "<td>" +
-                    escapeHTML(judul || "-") +
+                    escapeHTML(
+                        kategori || "-"
+                    ) +
                     "</td>" +
 
                     "<td>" +
-                    escapeHTML(isi || "-") +
+                    escapeHTML(
+                        judul || "-"
+                    ) +
                     "</td>" +
 
                     "<td>" +
-                    escapeHTML(preprocessing || "-") +
+                    escapeHTML(
+                        isi || "-"
+                    ) +
+                    "</td>" +
+
+                    "<td>" +
+                    escapeHTML(
+                        preprocessing || "-"
+                    ) +
                     "</td>";
 
 
@@ -207,75 +419,33 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
 
 
             // =============================================
-            // JUMLAH ARTIKEL
+            // LOG
             // =============================================
 
-            var artikel =
-                document.getElementById(artikelId);
+            console.log(
+                "===================================="
+            );
 
-            if (artikel) {
+            console.log(
+                "PREPROCESSING BERHASIL"
+            );
 
-                artikel.textContent =
-                    data.length;
+            console.log(
+                "Jumlah artikel:",
+                jumlahArtikel
+            );
 
-            }
+            console.log(
+                "Kategori:",
+                daftarKategori
+            );
 
-
-            // =============================================
-            // JUMLAH KATEGORI
-            // =============================================
-
-            if (kategoriId) {
-
-                var kategoriElement =
-                    document.getElementById(kategoriId);
-
-                if (kategoriElement) {
-
-                    var kategoriSet =
-                        new Set();
-
-                    data.forEach(function(row) {
-
-                        var kategori =
-                            getValue(
-                                row,
-                                [
-                                    "kategori",
-                                    "Kategori",
-                                    "category",
-                                    "Category"
-                                ]
-                            );
-
-                        if (kategori) {
-
-                            kategoriSet.add(
-                                String(kategori)
-                            );
-
-                        }
-
-                    });
-
-
-                    if (kategoriSet.size > 0) {
-
-                        kategoriElement.textContent =
-                            kategoriSet.size;
-
-                    } else {
-
-                        kategoriElement.textContent =
-                            "-";
-
-                    }
-
-                }
-
-            }
+            console.log(
+                "===================================="
+            );
 
         })
+
 
         .catch(function(error) {
 
@@ -283,6 +453,7 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
                 "ERROR PREPROCESSING:",
                 error
             );
+
 
             showTableError(
                 bodyId,
@@ -296,27 +467,14 @@ function loadPreprocessing(file, bodyId, artikelId, kategoriId) {
 
 
 // =====================================================
-// PREPROCESSING SPORT
+// JALANKAN PREPROCESSING
 // =====================================================
 
 loadPreprocessing(
-    "data/hasil_preprocessing_detik_sport.json",
-    "sportPreprocessingBody",
-    "sportDatasetArtikel",
-    "sportDatasetKategori"
+    "data/hasil_preprocessing_detik_finance_sport.json",
+    "preprocessingBody"
 );
 
-
-// =====================================================
-// PREPROCESSING FINANCE
-// =====================================================
-
-loadPreprocessing(
-    "data/hasil_preprocessing_detik_finance.json",
-    "financePreprocessingBody",
-    "financeDatasetArtikel",
-    "financeDatasetKategori"
-);
 
 
 // =====================================================
@@ -331,7 +489,10 @@ function loadTfidf(
     bodyId
 ) {
 
-    console.log("Memuat TF-IDF:", file);
+    console.log(
+        "Memuat TF-IDF:",
+        file
+    );
 
 
     fetch(file)
@@ -341,7 +502,8 @@ function loadTfidf(
             if (!response.ok) {
 
                 throw new Error(
-                    "File tidak ditemukan: " + file
+                    "File tidak ditemukan: " +
+                    file
                 );
 
             }
@@ -350,14 +512,18 @@ function loadTfidf(
 
         })
 
+
         .then(function(data) {
 
             console.log(
                 "Data TF-IDF berhasil:",
-                file,
                 data
             );
 
+
+            // =============================================
+            // CEK FORMAT
+            // =============================================
 
             if (!Array.isArray(data)) {
 
@@ -378,11 +544,12 @@ function loadTfidf(
 
 
             // =============================================
-            // DAFTAR KOLOM
+            // AMBIL SEMUA KOLOM
             // =============================================
 
             var semuaKolom =
                 Object.keys(data[0]);
+
 
             console.log(
                 "Kolom TF-IDF:",
@@ -391,26 +558,57 @@ function loadTfidf(
 
 
             // =============================================
-            // BUANG KOLOM NON-TFIDF
+            // KOLOM YANG BUKAN TF-IDF
+            // =============================================
+
+            var kolomNonTfidf = [
+
+                "judul",
+                "Judul",
+
+                "url",
+                "URL",
+
+                "kategori",
+                "Kategori",
+
+                "category",
+                "Category",
+
+                "id",
+                "ID",
+
+                "no",
+                "No",
+
+                "index",
+
+                "isi",
+                "Isi",
+
+                "teks_preprocessing",
+                "hasil_preprocessing",
+                "preprocessing",
+
+                "text_preprocessing"
+
+            ];
+
+
+            // =============================================
+            // AMBIL KOLOM TF-IDF
             // =============================================
 
             var kataKolom =
-                semuaKolom.filter(function(kolom) {
+                semuaKolom.filter(
+                    function(kolom) {
 
-                    var nama =
-                        String(kolom).toLowerCase();
+                        return !kolomNonTfidf.includes(
+                            kolom
+                        );
 
-                    return (
-                        nama !== "judul" &&
-                        nama !== "url" &&
-                        nama !== "kategori" &&
-                        nama !== "category" &&
-                        nama !== "id" &&
-                        nama !== "no" &&
-                        nama !== "index"
-                    );
-
-                });
+                    }
+                );
 
 
             // =============================================
@@ -420,25 +618,36 @@ function loadTfidf(
             var jumlahArtikel =
                 data.length;
 
+
             var jumlahKata =
                 kataKolom.length;
 
+
+            // =============================================
+            // ELEMENT HTML
+            // =============================================
 
             var artikelElement =
                 document.getElementById(
                     jumlahArtikelId
                 );
 
+
             var kataElement =
                 document.getElementById(
                     jumlahKataId
                 );
+
 
             var dimensiElement =
                 document.getElementById(
                     dimensiId
                 );
 
+
+            // =============================================
+            // JUMLAH ARTIKEL
+            // =============================================
 
             if (artikelElement) {
 
@@ -448,6 +657,10 @@ function loadTfidf(
             }
 
 
+            // =============================================
+            // JUMLAH KATA
+            // =============================================
+
             if (kataElement) {
 
                 kataElement.textContent =
@@ -455,6 +668,10 @@ function loadTfidf(
 
             }
 
+
+            // =============================================
+            // DIMENSI
+            // =============================================
 
             if (dimensiElement) {
 
@@ -473,47 +690,53 @@ function loadTfidf(
             var daftarKata = [];
 
 
-            kataKolom.forEach(function(kata) {
+            kataKolom.forEach(
+                function(kata) {
 
-                var nilaiMaksimum = 0;
-
-
-                data.forEach(function(row) {
-
-                    var nilai =
-                        Number(row[kata]);
+                    var nilaiMaksimum = 0;
 
 
-                    if (
-                        Number.isFinite(nilai) &&
-                        nilai > nilaiMaksimum
-                    ) {
+                    data.forEach(
+                        function(row) {
 
-                        nilaiMaksimum =
-                            nilai;
+                            var nilai =
+                                Number(
+                                    row[kata]
+                                );
+
+
+                            if (
+                                Number.isFinite(nilai) &&
+                                nilai > nilaiMaksimum
+                            ) {
+
+                                nilaiMaksimum =
+                                    nilai;
+
+                            }
+
+                        }
+                    );
+
+
+                    if (nilaiMaksimum > 0) {
+
+                        daftarKata.push({
+
+                            kata: kata,
+
+                            nilai: nilaiMaksimum
+
+                        });
 
                     }
 
-                });
-
-
-                if (nilaiMaksimum > 0) {
-
-                    daftarKata.push({
-
-                        kata: kata,
-
-                        nilai: nilaiMaksimum
-
-                    });
-
                 }
-
-            });
+            );
 
 
             // =============================================
-            // URUTKAN DARI TERBESAR
+            // URUTKAN
             // =============================================
 
             daftarKata.sort(
@@ -526,12 +749,19 @@ function loadTfidf(
 
 
             // =============================================
-            // AMBIL 30 KATA
+            // AMBIL 30 KATA TERATAS
             // =============================================
 
             var topKata =
-                daftarKata.slice(0, 30);
+                daftarKata.slice(
+                    0,
+                    30
+                );
 
+
+            // =============================================
+            // TABEL
+            // =============================================
 
             var tbody =
                 document.getElementById(
@@ -553,14 +783,16 @@ function loadTfidf(
 
 
             // =============================================
-            // TAMPILKAN TF-IDF
+            // TAMPILKAN
             // =============================================
 
             topKata.forEach(
                 function(item, index) {
 
                     var tr =
-                        document.createElement("tr");
+                        document.createElement(
+                            "tr"
+                        );
 
 
                     tr.innerHTML =
@@ -570,7 +802,9 @@ function loadTfidf(
                         "</td>" +
 
                         "<td>" +
-                        escapeHTML(item.kata) +
+                        escapeHTML(
+                            item.kata
+                        ) +
                         "</td>" +
 
                         "<td>" +
@@ -584,18 +818,59 @@ function loadTfidf(
             );
 
 
+            // =============================================
+            // TIDAK ADA KATA
+            // =============================================
+
             if (topKata.length === 0) {
 
                 tbody.innerHTML =
+
                     "<tr>" +
-                    "<td colspan='3' style='text-align:center; padding:30px;'>" +
+
+                    "<td colspan='3' " +
+                    "style='text-align:center; padding:30px;'>" +
+
                     "Tidak ditemukan nilai TF-IDF." +
+
                     "</td>" +
+
                     "</tr>";
 
             }
 
+
+            console.log(
+                "===================================="
+            );
+
+            console.log(
+                "TF-IDF BERHASIL"
+            );
+
+            console.log(
+                "Jumlah artikel:",
+                jumlahArtikel
+            );
+
+            console.log(
+                "Jumlah kata:",
+                jumlahKata
+            );
+
+            console.log(
+                "Dimensi:",
+                jumlahArtikel +
+                " × " +
+                jumlahKata
+            );
+
+            console.log(
+                "===================================="
+            );
+
         })
+
 
         .catch(function(error) {
 
@@ -617,7 +892,8 @@ function loadTfidf(
 
                     "<tr>" +
 
-                    "<td colspan='3' style='text-align:center; padding:30px; color:#dc2626;'>" +
+                    "<td colspan='3' " +
+                    "style='text-align:center; padding:30px; color:#dc2626;'>" +
 
                     "Gagal memuat TF-IDF:<br>" +
 
@@ -637,29 +913,17 @@ function loadTfidf(
 
 
 // =====================================================
-// TF-IDF SPORT
+// JALANKAN TF-IDF
 // =====================================================
 
 loadTfidf(
-    "data/hasil_tfidf_detik_sport.json",
-    "sportJumlahArtikel",
-    "sportJumlahKata",
-    "sportDimensiTfidf",
-    "sportTfidfBody"
+    "data/hasil_tfidf_detik_finance_sport.json",
+    "jumlahArtikel",
+    "jumlahKata",
+    "dimensiTfidf",
+    "tfidfBody"
 );
 
-
-// =====================================================
-// TF-IDF FINANCE
-// =====================================================
-
-loadTfidf(
-    "data/hasil_tfidf_detik_finance.json",
-    "financeJumlahArtikel",
-    "financeJumlahKata",
-    "financeDimensiTfidf",
-    "financeTfidfBody"
-);
 
 
 // =====================================================
@@ -669,11 +933,13 @@ loadTfidf(
 function loadPca(
     file,
     chartId,
-    dimensiId,
-    mode
+    dimensiId
 ) {
 
-    console.log("Memuat PCA:", file);
+    console.log(
+        "Memuat PCA:",
+        file
+    );
 
 
     fetch(file)
@@ -683,7 +949,8 @@ function loadPca(
             if (!response.ok) {
 
                 throw new Error(
-                    "File tidak ditemukan: " + file
+                    "File tidak ditemukan: " +
+                    file
                 );
 
             }
@@ -692,14 +959,18 @@ function loadPca(
 
         })
 
+
         .then(function(data) {
 
             console.log(
                 "Data PCA berhasil:",
-                file,
                 data
             );
 
+
+            // =============================================
+            // CEK FORMAT
+            // =============================================
 
             if (!Array.isArray(data)) {
 
@@ -725,102 +996,104 @@ function loadPca(
             );
 
 
+            // =============================================
+            // DATA TITIK PCA
+            // =============================================
+
             var titik = [];
 
 
-            // =============================================
-            // BACA DATA PCA
-            // =============================================
+            data.forEach(
+                function(row, index) {
 
-            data.forEach(function(row, index) {
-
-                var pc1 =
-                    Number(
-                        getValue(
-                            row,
-                            [
-                                "PC1",
-                                "pc1",
-                                "PCA1",
-                                "pca1",
-                                "principal_component_1"
-                            ]
-                        )
-                    );
-
-
-                var pc2 =
-                    Number(
-                        getValue(
-                            row,
-                            [
-                                "PC2",
-                                "pc2",
-                                "PCA2",
-                                "pca2",
-                                "principal_component_2"
-                            ]
-                        )
-                    );
-
-
-                if (
-                    Number.isFinite(pc1) &&
-                    Number.isFinite(pc2)
-                ) {
-
-                    titik.push({
-
-                        index:
-                            index + 1,
-
-                        pc1:
-                            pc1,
-
-                        pc2:
-                            pc2,
-
-                        judul:
+                    var pc1 =
+                        Number(
                             getValue(
                                 row,
                                 [
-                                    "judul",
-                                    "Judul",
-                                    "title",
-                                    "Title"
+                                    "PC1",
+                                    "pc1",
+                                    "PCA1",
+                                    "pca1",
+                                    "principal_component_1"
                                 ]
-                            ) ||
-                            "Artikel " +
-                            (index + 1),
+                            )
+                        );
 
-                        kategori:
+
+                    var pc2 =
+                        Number(
                             getValue(
                                 row,
                                 [
-                                    "kategori",
-                                    "Kategori",
-                                    "category",
-                                    "Category"
+                                    "PC2",
+                                    "pc2",
+                                    "PCA2",
+                                    "pca2",
+                                    "principal_component_2"
                                 ]
-                            ) ||
-                            "-",
+                            )
+                        );
 
-                        url:
-                            getValue(
-                                row,
-                                [
-                                    "url",
-                                    "URL",
-                                    "link"
-                                ]
-                            ) ||
-                            "#"
 
-                    });
+                    if (
+                        Number.isFinite(pc1) &&
+                        Number.isFinite(pc2)
+                    ) {
+
+                        titik.push({
+
+                            index:
+                                index + 1,
+
+                            pc1:
+                                pc1,
+
+                            pc2:
+                                pc2,
+
+                            judul:
+                                getValue(
+                                    row,
+                                    [
+                                        "judul",
+                                        "Judul",
+                                        "title",
+                                        "Title"
+                                    ]
+                                ) ||
+                                "Artikel " +
+                                (index + 1),
+
+                            kategori:
+                                getValue(
+                                    row,
+                                    [
+                                        "kategori",
+                                        "Kategori",
+                                        "category",
+                                        "Category"
+                                    ]
+                                ) ||
+                                "Tidak diketahui",
+
+                            url:
+                                getValue(
+                                    row,
+                                    [
+                                        "url",
+                                        "URL",
+                                        "link"
+                                    ]
+                                ) ||
+                                "#"
+
+                        });
+
+                    }
 
                 }
-
-            });
+            );
 
 
             console.log(
@@ -830,7 +1103,7 @@ function loadPca(
 
 
             // =============================================
-            // DIMENSI AWAL
+            // DIMENSI PCA
             // =============================================
 
             var dimensiAwal =
@@ -844,13 +1117,15 @@ function loadPca(
                 dimensiAwal.textContent =
                     data.length +
                     " × " +
-                    Object.keys(data[0]).length;
+                    Object.keys(
+                        data[0]
+                    ).length;
 
             }
 
 
             // =============================================
-            // CHART AREA
+            // CHART
             // =============================================
 
             var chartArea =
@@ -882,7 +1157,9 @@ function loadPca(
 
                     "<div class='pca-error'>" +
 
-                    "<strong>Data PCA tidak dapat ditampilkan.</strong>" +
+                    "<strong>" +
+                    "Data PCA tidak dapat ditampilkan." +
+                    "</strong>" +
 
                     "<br><br>" +
 
@@ -893,7 +1170,9 @@ function loadPca(
                     "Kolom yang tersedia: " +
 
                     escapeHTML(
-                        Object.keys(data[0]).join(", ")
+                        Object.keys(
+                            data[0]
+                        ).join(", ")
                     ) +
 
                     "</div>";
@@ -972,30 +1251,22 @@ function loadPca(
 
 
             // =============================================
-            // WARNA
+            // WARNA KATEGORI
             // =============================================
 
-            var warna = [
+            var warnaKategori = {
 
-                "#2563eb",
-                "#dc2626",
-                "#16a34a",
-                "#9333ea",
-                "#ea580c",
-                "#0891b2",
-                "#ca8a04",
-                "#db2777"
+                "Finance":
+                    "#2563eb",
 
-            ];
+                "Sport":
+                    "#dc2626"
 
-
-            var warnaKategori = {};
-
-            var warnaIndex = 0;
+            };
 
 
             // =============================================
-            // BUAT TITIK
+            // BUAT TITIK PCA
             // =============================================
 
             titik.forEach(
@@ -1045,73 +1316,32 @@ function loadPca(
                         "pca-point";
 
 
+                    // =====================================
+                    // KATEGORI
+                    // =====================================
+
                     var kategori =
                         String(
                             item.kategori
-                        );
+                        ).trim();
 
 
-                    var kategoriLower =
-                        kategori.toLowerCase();
+                    var warna =
+                        warnaKategori[
+                            kategori
+                        ];
 
 
-                    // =====================================
-                    // WARNA SPORT
-                    // =====================================
+                    if (!warna) {
 
-                    if (
-                        mode === "sport" &&
-                        kategoriLower.includes(
-                            "inggris"
-                        )
-                    ) {
-
-                        point.classList.add(
-                            "point-inggris"
-                        );
+                        warna =
+                            "#64748b";
 
                     }
 
-                    else if (
-                        mode === "sport" &&
-                        kategoriLower.includes(
-                            "italia"
-                        )
-                    ) {
 
-                        point.classList.add(
-                            "point-italia"
-                        );
-
-                    }
-
-                    else {
-
-                        if (
-                            !warnaKategori[
-                                kategori
-                            ]
-                        ) {
-
-                            warnaKategori[
-                                kategori
-                            ] =
-                                warna[
-                                    warnaIndex %
-                                    warna.length
-                                ];
-
-                            warnaIndex++;
-
-                        }
-
-
-                        point.style.background =
-                            warnaKategori[
-                                kategori
-                            ];
-
-                    }
+                    point.style.background =
+                        warna;
 
 
                     // =====================================
@@ -1148,7 +1378,7 @@ function loadPca(
 
 
                     // =====================================
-                    // KLIK
+                    // KLIK ARTIKEL
                     // =====================================
 
                     point.addEventListener(
@@ -1180,7 +1410,7 @@ function loadPca(
 
 
             // =============================================
-            // JUMLAH ARTIKEL
+            // JUMLAH TITIK
             // =============================================
 
             var jumlahTitik =
@@ -1204,82 +1434,88 @@ function loadPca(
 
 
             // =============================================
-            // LEGEND FINANCE
+            // LEGEND
             // =============================================
 
-            if (
-                mode === "finance"
-            ) {
-
-                var legend =
-                    document.getElementById(
-                        "financeLegend"
-                    );
+            var legend =
+                document.getElementById(
+                    "pcaLegend"
+                );
 
 
-                if (legend) {
+            if (legend) {
 
-                    legend.innerHTML = "";
-
-
-                    Object.keys(
-                        warnaKategori
-                    ).forEach(
-                        function(kategori) {
-
-                            var span =
-                                document.createElement(
-                                    "span"
-                                );
+                legend.innerHTML = "";
 
 
-                            var dot =
-                                document.createElement(
-                                    "i"
-                                );
+                Object.keys(
+                    warnaKategori
+                ).forEach(
+                    function(kategori) {
 
-
-                            dot.className =
-                                "dot";
-
-
-                            dot.style.background =
-                                warnaKategori[
-                                    kategori
-                                ];
-
-
-                            span.appendChild(
-                                dot
+                        var span =
+                            document.createElement(
+                                "span"
                             );
 
 
-                            span.appendChild(
-                                document.createTextNode(
-                                    kategori
-                                )
+                        var dot =
+                            document.createElement(
+                                "i"
                             );
 
 
-                            legend.appendChild(
-                                span
-                            );
+                        dot.className =
+                            "dot";
 
-                        }
-                    );
 
-                }
+                        dot.style.background =
+                            warnaKategori[
+                                kategori
+                            ];
+
+
+                        span.appendChild(
+                            dot
+                        );
+
+
+                        span.appendChild(
+                            document.createTextNode(
+                                kategori
+                            )
+                        );
+
+
+                        legend.appendChild(
+                            span
+                        );
+
+                    }
+                );
 
             }
 
 
             console.log(
-                "PCA berhasil ditampilkan:",
-                titik.length,
-                "titik"
+                "===================================="
+            );
+
+            console.log(
+                "PCA BERHASIL"
+            );
+
+            console.log(
+                "Jumlah titik:",
+                titik.length
+            );
+
+            console.log(
+                "===================================="
             );
 
         })
+
 
         .catch(function(error) {
 
@@ -1301,7 +1537,9 @@ function loadPca(
 
                     "<div class='pca-error'>" +
 
-                    "<strong>Gagal memuat data PCA.</strong>" +
+                    "<strong>" +
+                    "Gagal memuat data PCA." +
+                    "</strong>" +
 
                     "<br><br>" +
 
@@ -1319,24 +1557,37 @@ function loadPca(
 
 
 // =====================================================
-// PCA SPORT
+// JALANKAN PCA
 // =====================================================
 
 loadPca(
-    "data/hasil_pca_detik_sport.json",
-    "sportChartArea",
-    "sportDimensiAwal",
-    "sport"
+    "data/hasil_pca_detik_finance_sport.json",
+    "pcaChartArea",
+    "pcaDimensiAwal"
 );
 
 
+
 // =====================================================
-// PCA FINANCE
+// INFORMASI DATASET
 // =====================================================
 
-loadPca(
-    "data/hasil_pca_detik_finance.json",
-    "financeChartArea",
-    "financeDimensiAwal",
-    "finance"
+console.log(
+    "======================================"
+);
+
+console.log(
+    "PPW NEWS ANALYSIS"
+);
+
+console.log(
+    "Dataset: Detik Finance + Detik Sport"
+);
+
+console.log(
+    "Target: 200 artikel"
+);
+
+console.log(
+    "======================================"
 );

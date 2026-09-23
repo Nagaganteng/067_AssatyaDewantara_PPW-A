@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ML Model Comparison</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div>
+                <p class="label">TUGAS 3 • PPW</p>
+                <h1>Model Comparison</h1>
+                <p class="subtitle">
+                    Perbandingan performa CNN dan Random Forest
+                    menggunakan TF-IDF dengan dan tanpa PCA.
+                </p>
+            </div>
+        </header>
+
+
+        <!-- SUMMARY -->
+        <section class="summary">
+
+            <div class="summary-card">
+                <span>EXPERIMENT</span>
+                <strong id="totalExperiment">-</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>MODEL</span>
+                <strong id="totalModel">-</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>METODE</span>
+                <strong id="totalMethod">-</strong>
+            </div>
+
+        </section>
+
+
+        <!-- TABLE -->
+        <section class="comparison-section">
+
+            <div class="section-heading">
+                <div>
+                    <p class="label">HASIL EKSPERIMEN</p>
+                    <h2>Perbandingan Model</h2>
+                </div>
+
+                <div class="filter">
+                    <select id="modelFilter">
+                        <option value="all">Semua Model</option>
+                        <option value="CNN">CNN</option>
+                        <option value="Random Forest">Random Forest</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Model</th>
+                            <th>Representasi</th>
+                            <th>Accuracy</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-Score</th>
+                            <th>Training Time</th>
+                            <th>Features</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="comparisonTable">
+                        <tr>
+                            <td colspan="9" class="loading">
+                                Memuat data...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHART -->
+        <section class="chart-section">
+
+            <div class="section-heading">
+                <div>
+                    <p class="label">VISUALISASI</p>
+                    <h2>Performa Model</h2>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <canvas id="performanceChart"></canvas>
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer>
+            <p>
+                PPW — Pencarian & Penambangan Web
+            </p>
+
+            <p>
+                Assatya Dewantara
+            </p>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

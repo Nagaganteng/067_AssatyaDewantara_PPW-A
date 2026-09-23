@@ -1,0 +1,42 @@
+[
+    {
+        "Model":"CNN",
+        "PCA":"Tanpa PCA",
+        "Fitur":4098,
+        "Accuracy":1.0,
+        "Precision":1.0,
+        "Recall":1.0,
+        "F1-Score":1.0,
+        "Waktu Training (detik)":124.6923549175
+    },
+    {
+        "Model":"CNN",
+        "PCA":"Dengan PCA",
+        "Fitur":129,
+        "Accuracy":1.0,
+        "Precision":1.0,
+        "Recall":1.0,
+        "F1-Score":1.0,
+        "Waktu Training (detik)":16.1137571335
+    },
+    {
+        "Model":"Random Forest",
+        "PCA":"Tanpa PCA",
+        "Fitur":4098,
+        "Accuracy":1.0,
+        "Precision":1.0,
+        "Recall":1.0,
+        "F1-Score":1.0,
+        "Waktu Training (detik)":1.4615116119
+    },
+    {
+        "Model":"Random Forest",
+        "PCA":"Dengan PCA",
+        "Fitur":129,
+        "Accuracy":1.0,
+        "Precision":1.0,
+        "Recall":1.0,
+        "F1-Score":1.0,
+        "Waktu Training (detik)":1.5811727047
+    }
+]
