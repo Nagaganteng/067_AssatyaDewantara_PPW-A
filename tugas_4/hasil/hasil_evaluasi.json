@@ -1,0 +1,49 @@
+{
+    "total_data": 205,
+    "data_training": 164,
+    "data_testing": 41,
+    "jumlah_kategori": 2,
+    "dimensi_vektor": 100,
+    "akurasi": 1.0,
+    "kategori": [
+        "Finance",
+        "Sport"
+    ],
+    "confusion_matrix": [
+        [
+            20,
+            0
+        ],
+        [
+            0,
+            21
+        ]
+    ],
+    "classification_report": {
+        "Finance": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 20.0
+        },
+        "Sport": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 21.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 41.0
+        },
+        "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 41.0
+        }
+    }
+}

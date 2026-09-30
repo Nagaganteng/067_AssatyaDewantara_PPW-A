@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPW News Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>PPW <span>Tugas 4</span></h2>
+        <p class="subtitle">Classification Naive Bayes</p>
+        <nav>
+            <a href="#dashboard" class="active">Dashboard</a>
+            <a href="#evaluasi">Evaluasi Model</a>
+            <a href="#hasil">Hasil Klasifikasi</a>
+        </nav>
+        <p class="side-footer">Word2Vec Skip-Gram<br>Naive Bayes</p>
+    </aside>
+
+    <main class="main">
+        <header>
+            <div>
+                <h1>Dashboard Klasifikasi Berita</h1>
+                <p>Analisis berita Detik.com menggunakan Skip-Gram dan Naive Bayes</p>
+            </div>
+            <span class="status">● Model Selesai</span>
+        </header>
+
+        <section id="dashboard">
+            <h2>Ringkasan Dataset</h2>
+            <div class="cards">
+                <div class="card">
+                    <p>Total Berita</p>
+                    <h2 id="total">-</h2>
+                </div>
+                <div class="card">
+                    <p>Data Training</p>
+                    <h2 id="training">-</h2>
+                </div>
+                <div class="card">
+                    <p>Data Testing</p>
+                    <h2 id="testing">-</h2>
+                </div>
+                <div class="card">
+                    <p>Akurasi</p>
+                    <h2 id="akurasi">-</h2>
+                </div>
+            </div>
+            <div class="card info">
+                <h3>Metode Penelitian</h3>
+                <p>
+                    Data berita diproses melalui preprocessing teks.
+                    Selanjutnya, Word2Vec Skip-Gram dari Gensim digunakan
+                    untuk menghasilkan vektor berita. Vektor tersebut
+                    kemudian diklasifikasikan menggunakan Gaussian
+                    Naive Bayes.
+                </p>
+                <p id="dimensi">Dimensi vektor: -</p>
+            </div>
+        </section>
+
+        <section id="evaluasi">
+            <h2>Evaluasi Model</h2>
+            <div class="evaluation">
+                <div class="card">
+                    <h3>Classification Report</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Kategori</th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="report"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Confusion Matrix</h3>
+                    <canvas id="matrixChart"></canvas>
+                    <div id="matrixTable"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hasil">
+            <h2>Hasil Klasifikasi Berita</h2>
+            <div class="card">
+                <input id="search" type="text"
+                    placeholder="Cari berita atau kategori...">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Berita</th>
+                                <th>Kategori Aktual</th>
+                                <th>Hasil Prediksi</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="newsTable"></tbody>
+                    </table>
+                </div>
+                <p id="count"></p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
