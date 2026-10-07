@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        PPW News Classification
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="container">
+
+            <h1>
+                PPW NEWS CLASSIFICATION
+            </h1>
+
+            <p>
+                Crawling • Sastrawi • Skip-Gram • Naive Bayes
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <section class="card">
+
+            <h2>
+                Klasifikasi Berita
+            </h2>
+
+            <div class="mode-buttons">
+
+                <button
+                    id="urlModeBtn"
+                    class="active"
+                    onclick="setMode('url')"
+                >
+                    URL Berita
+                </button>
+
+                <button
+                    id="textModeBtn"
+                    onclick="setMode('text')"
+                >
+                    Teks Langsung
+                </button>
+
+            </div>
+
+
+            <div id="urlInput">
+
+                <label>
+                    URL Berita
+                </label>
+
+                <input
+                    type="url"
+                    id="url"
+                    placeholder="Masukkan URL berita Detik..."
+                >
+
+            </div>
+
+
+            <div
+                id="textInput"
+                class="hidden"
+            >
+
+                <label>
+                    Teks Berita
+                </label>
+
+                <textarea
+                    id="text"
+                    rows="10"
+                    placeholder="Tempelkan teks berita di sini..."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                class="classify-button"
+                onclick="classifyNews()"
+            >
+                Analisis Berita
+            </button>
+
+        </section>
+
+
+        <div
+            id="loading"
+            class="loading hidden"
+        >
+            Sedang memproses berita...
+        </div>
+
+
+        <section
+            id="result"
+            class="hidden"
+        >
+
+            <div class="card">
+
+                <h2>
+                    Hasil Klasifikasi
+                </h2>
+
+                <div
+                    id="prediction"
+                    class="prediction"
+                >
+                </div>
+
+                <h3>
+                    Distribusi Keyakinan Model
+                </h3>
+
+                <div
+                    id="confidence"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    Informasi Berita
+                </h2>
+
+                <div
+                    id="articleInfo"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    Konten Terekstraksi
+                </h2>
+
+                <p>
+                    Jumlah kata:
+                    <strong id="wordCount">
+                        0
+                    </strong>
+                </p>
+
+                <div
+                    id="content"
+                    class="content-box"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    Preprocessing Sastrawi
+                </h2>
+
+                <h3>
+                    Cleaning
+                </h3>
+
+                <div
+                    id="cleaning"
+                    class="result-box"
+                >
+                </div>
+
+
+                <h3>
+                    Tokenisasi
+                </h3>
+
+                <div
+                    id="tokenisasi"
+                    class="result-box"
+                >
+                </div>
+
+
+                <h3>
+                    Stopword Removal
+                </h3>
+
+                <div
+                    id="stopword"
+                    class="result-box"
+                >
+                </div>
+
+
+                <h3>
+                    Stemming
+                </h3>
+
+                <div
+                    id="stemming"
+                    class="result-box"
+                >
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>
+                    Word2Vec Skip-Gram
+                </h2>
+
+                <div
+                    id="embeddingInfo"
+                >
+                </div>
+
+                <h3>
+                    Detail Embedding
+                </h3>
+
+                <div
+                    id="embeddingTable"
+                >
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script
+        src="{{ url_for('static', filename='js/script.js') }}"
+    ></script>
+
+</body>
+
+</html>
